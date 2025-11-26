@@ -11,7 +11,9 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY")
@@ -22,6 +24,11 @@ Bootstrap5(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+SMTP_ADDRESS = os.environ.get("SMTP_ADDRESS")
+SMTP_PORT = os.environ.get("SMTP_PORT")
+EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+TO_ADDRESS = os.environ.get("TO_ADDRESS")
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -244,17 +251,14 @@ def delete_post(post_id):
 def about():
     return render_template("about.html", current_user=current_user)
 
-
-@app.route("/contact", methods=["GET", "POST"])
-def contact():
-    return render_template("contact.html", current_user=current_user)
-
+MAIL_ADDRESS = os.environ.get("EMAIL_KEY")
+MAIL_APP_PW = os.environ.get("PASSWORD_KEY")
 
 MAIL_ADDRESS = os.environ.get("EMAIL_KEY")
 MAIL_APP_PW = os.environ.get("PASSWORD_KEY")
 
 @app.route("/contact", methods=["GET", "POST"])
-def contact():
+def contact_page():
     if request.method == "POST":
          data = request.form
          send_email(data["name"], data["email"], data["phone"], data["message"])
@@ -267,8 +271,8 @@ def send_email(name, email, phone, message):
      with smtplib.SMTP("smtp.gmail.com") as connection:
          connection.starttls()
          connection.login(MAIL_ADDRESS, MAIL_APP_PW)
-         connection.sendmail(MAIL_ADDRESS, MAIL_APP_PW, email_message)
+         connection.sendmail(MAIL_ADDRESS, MAIL_ADDRESS, email_message)
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)

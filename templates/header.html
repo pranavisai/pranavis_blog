@@ -8,7 +8,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Angela's Blog</title>
+    <title>Pranavi's Musings</title>
     {% block styles %}
     <!-- Load Bootstrap-Flask CSS here -->
     {{ bootstrap.load_css() }}
@@ -44,7 +44,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="/">Start Bootstrap</a>
+        <a class="navbar-brand" href="/">Pranavi's Blog</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -59,13 +59,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto py-4 py-lg-0">
-            <li class="nav-item">
-              <a
-                class="nav-link px-lg-3 py-3 py-lg-4"
-                href="{{ url_for('get_all_posts') }}"
-                >Home</a
-              >
-            </li>
             <!-- Only show Login/Register if user is logged out. Otherwise show "Log Out" -->
             {% if not current_user.is_authenticated: %}
             <li class="nav-item">
@@ -101,7 +94,7 @@
             <li class="nav-item">
               <a
                 class="nav-link px-lg-3 py-3 py-lg-4"
-                href="{{ url_for('contact') }}"
+                href="{{ url_for('contact_page') }}"
                 >Contact</a
               >
             </li>
